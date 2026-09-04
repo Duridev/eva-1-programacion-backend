@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Autenticación{% endblock %}</title>
+    <!-- Tipografía Inter para un diseño moderno y legible -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Hoja de estilos principal del proyecto -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <!-- Barra superior de navegación -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="/login/" class="brand-logo">
+                <span class="logo-icon">🛡️</span>
+                <span class="logo-text">Evaluación Backend 1</span>
+            </a>
+            <nav class="nav-links">
+                <a href="/login/" class="nav-item">Iniciar Sesión</a>
+                <a href="/registro/" class="nav-item nav-btn">Registrarse</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenido principal de cada vista -->
+    <main class="main-layout">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Pie de página institucional -->
+    <footer class="footer">
+        <p>Proyecto Universitario Django — Arquitectura EDD en Memoria (sin DB)</p>
+    </footer>
+
+    <!-- Archivo JavaScript para interacción y experiencia de usuario (UX) -->
+    <script src="{% static 'js/validaciones.js' %}"></script>
+</body>
+</html>

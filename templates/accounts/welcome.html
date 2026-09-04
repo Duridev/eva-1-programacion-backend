@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Bienvenida — Sesión Iniciada{% endblock %}
+
+{% block content %}
+<div class="auth-card welcome-card">
+    <div class="card-header">
+        <div class="welcome-avatar">👋</div>
+        <h2>Bienvenido, {{ username }}</h2>
+        <p class="subtitle">Has iniciado sesión correctamente en el sistema</p>
+    </div>
+
+    <div class="welcome-body">
+        <div class="status-box">
+            <span class="status-indicator"></span>
+            <span>Sesión activa verificada mediante cookies firmadas de Django</span>
+        </div>
+
+        <div class="session-details">
+            <p><strong>Usuario activo:</strong> <code>{{ username }}</code></p>
+            <p><strong>Almacenamiento:</strong> Estructura en memoria del servidor (<code>store.py</code>)</p>
+        </div>
+
+        <div class="welcome-actions">
+            <a href="/logout/" class="btn-logout" id="btn-logout">Cerrar Sesión</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

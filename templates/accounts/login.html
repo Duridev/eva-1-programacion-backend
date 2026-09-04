@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión — Autenticación{% endblock %}
+
+{% block content %}
+<div class="auth-card">
+    <div class="card-header">
+        <h2>Iniciar Sesión</h2>
+        <p class="subtitle">Ingresa tus credenciales para acceder al sistema</p>
+    </div>
+
+    <!-- Mensaje de éxito tras completar el registro de usuario -->
+    {% if mensaje_exito %}
+    <div class="alert alert-success" id="login-success-box">
+        {{ mensaje_exito }}
+    </div>
+    {% endif %}
+
+    <!-- Alerta de error o bloqueo emitida por Django -->
+    {% if error_login %}
+    <div class="alert {% if bloqueado %}alert-danger alert-locked{% else %}alert-danger{% endif %}" id="login-error-box">
+        {% if bloqueado %}
+            <span class="locked-badge">🔒 ACCESO DENEGADO</span>
+        {% endif %}
+        <p>{{ error_login }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Alerta informativa con datos del usuario semilla para pruebas -->
+    <div class="alert alert-info">
+        <small>💡 <strong>Usuario de prueba precargado:</strong> <code>admin</code> / Clave: <code>Admin1234</code></small>
+    </div>
+
+    <form method="POST" action="/login/" class="auth-form" id="login-form">
+        {% csrf_token %}
+
+        <!-- Campo: Nombre de usuario -->
+        <div class="form-group">
+            <label for="id_login_username">Nombre de Usuario</label>
+            <input 
+                type="text" 
+                id="id_login_username" 
+                name="username" 
+                value="{{ prev_username|default:'' }}" 
+                placeholder="Ingresa tu usuario" 
+                required 
+                autocomplete="username"
+            >
+        </div>
+
+        <!-- Campo: Contraseña -->
+        <div class="form-group">
+            <label for="id_login_password">Contraseña</label>
+            <div class="password-field-wrapper">
+                <input 
+                    type="password" 
+                    id="id_login_password" 
+                    name="password" 
+                    placeholder="Ingresa tu contraseña" 
+                    required 
+                    autocomplete="current-password"
+                >
+                <button type="button" class="btn-toggle-pwd" data-target="id_login_password" title="Mostrar u ocultar contraseña">
+                    👁️
+                </button>
+            </div>
+        </div>
+
+        <!-- Botón de envío -->
+        <button type="submit" class="btn-submit" id="btn-login-submit">
+            Iniciar Sesión
+        </button>
+    </form>
+
+    <div class="card-footer">
+        <p>¿Aún no tienes cuenta? <a href="/registro/">Regístrate aquí</a></p>
+    </div>
+</div>
+{% endblock %}
