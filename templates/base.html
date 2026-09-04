@@ -1,19 +1,40 @@
+<!--
+==============================================================================
+PLANTILLA: templates/base.html
+------------------------------------------------------------------------------
+¿PARA QUÉ SIRVE ESTE ARCHIVO?
+Es la plantilla madre o "layout base" de toda la aplicación web. Contiene el
+esqueleto HTML común (etiquetas <html>, <head>, <body>, barra de navegación,
+pie de página y enlaces a CSS y JS).
+
+¿QUÉ FUNCIONES REALIZA DENTRO DEL PROGRAMA?
+1. Implementa la "Herencia de Plantillas" de Django mediante bloques:
+   - {% block title %}: Permite que cada página defina su propio título en la pestaña.
+   - {% block content %}: Espacio donde las páginas hijas (register, login, welcome)
+     inyectan su contenido específico sin repetir el código del encabezado ni del footer.
+2. Utiliza {% load static %} para resolver rutas a archivos CSS y JS de forma dinámica.
+3. Carga el script JS al final del <body> para optimizar la velocidad de carga.
+==============================================================================
+-->
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bloque dinámico para el título de la pestaña del navegador -->
     <title>{% block title %}Sistema de Autenticación{% endblock %}</title>
+
     <!-- Tipografía Inter para un diseño moderno y legible -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Hoja de estilos principal del proyecto -->
+
+    <!-- Enlace al archivo CSS principal usando la etiqueta {% static %} de Django -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <!-- Barra superior de navegación -->
+    <!-- Barra superior de navegación común a todas las páginas -->
     <header class="navbar">
         <div class="nav-container">
             <a href="/login/" class="brand-logo">
@@ -27,18 +48,19 @@
         </div>
     </header>
 
-    <!-- Contenido principal de cada vista -->
+    <!-- Contenedor principal donde cada plantilla hija inyecta su contenido -->
     <main class="main-layout">
         {% block content %}
+        <!-- Aquí se insertará el HTML de register.html, login.html o welcome.html -->
         {% endblock %}
     </main>
 
-    <!-- Pie de página institucional -->
+    <!-- Pie de página informativo del proyecto -->
     <footer class="footer">
         <p>Proyecto Universitario Django — Arquitectura EDD en Memoria (sin DB)</p>
     </footer>
 
-    <!-- Archivo JavaScript para interacción y experiencia de usuario (UX) -->
+    <!-- Script de interactividad UX cargado al final del documento -->
     <script src="{% static 'js/validaciones.js' %}"></script>
 </body>
 </html>

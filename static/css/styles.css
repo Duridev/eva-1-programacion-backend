@@ -1,18 +1,32 @@
-/* ==========================================================================
-   ESTILOS GENERALES Y VARIABLES DE DISEÑO (CSS PURO)
-   ========================================================================== */
+/* ==============================================================================
+   ARCHIVO: static/css/styles.css
+   ------------------------------------------------------------------------------
+   ¿PARA QUÉ SIRVE ESTE ARCHIVO?
+   Es la hoja de estilos de cascada (CSS puro). Define la apariencia visual,
+   colores, tipografía, espaciados y animaciones de toda la aplicación.
+
+   ¿QUÉ FUNCIONES REALIZA DENTRO DEL PROGRAMA?
+   1. Define una paleta de colores y variables (:root) para mantener consistencia.
+   2. Diseña la tarjeta central (.auth-card) con sombras y bordes redondeados modernos.
+   3. Estiliza los campos de entrada (.form-group input) con transiciones y anillos de enfoque.
+   4. Aplica esquemas visuales para los distintos tipos de alerta (error en rojo,
+      advertencia en ámbar, éxito en verde y bloqueo en rojo intenso).
+   5. Asegura que la interfaz sea responsiva y legible en cualquier tamaño de pantalla.
+   ============================================================================== */
+
 :root {
-    --primary-color: #4f46e5;       /* Índigo vibrante */
+    /* Paleta principal: Tonos índigo para una imagen profesional */
+    --primary-color: #4f46e5;       
     --primary-hover: #4338ca;
     --primary-light: #eef2ff;
-    --bg-color: #f8fafc;            /* Fondo pizarra ultra limpio */
+    --bg-color: #f8fafc;            /* Fondo pizarra muy suave */
     --card-bg: #ffffff;
-    --text-main: #0f172a;           /* Texto pizarra oscuro */
-    --text-muted: #64748b;          /* Texto secundario */
+    --text-main: #0f172a;           /* Texto principal oscuro */
+    --text-muted: #64748b;          /* Texto secundario / grisáceo */
     --border-color: #e2e8f0;
     --focus-ring: rgba(79, 70, 229, 0.2);
     
-    /* Estados de alerta */
+    /* Estados visuales de alerta (Feedback al usuario) */
     --danger-bg: #fef2f2;
     --danger-border: #fecaca;
     --danger-text: #991b1b;
@@ -35,7 +49,7 @@
     --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
 }
 
-/* Reset básico */
+/* Reset básico para normalizar márgenes y cálculo de cajas */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -52,9 +66,9 @@ body {
     flex-direction: column;
 }
 
-/* ==========================================================================
-   BARRA DE NAVEGACIÓN
-   ========================================================================== */
+/* ==============================================================================
+   BARRA SUPERIOR DE NAVEGACIÓN
+   ============================================================================== */
 .navbar {
     background-color: var(--card-bg);
     border-bottom: 1px solid var(--border-color);
@@ -109,9 +123,9 @@ body {
     color: var(--primary-hover);
 }
 
-/* ==========================================================================
-   LAYOUT PRINCIPAL Y CONTENEDOR DE FORMULARIOS
-   ========================================================================== */
+/* ==============================================================================
+   CONTENEDOR CENTRAL (CARD DE AUTENTICACIÓN)
+   ============================================================================== */
 .main-layout {
     flex: 1;
     display: flex;
@@ -154,9 +168,9 @@ body {
     margin-top: 0.25rem;
 }
 
-/* ==========================================================================
+/* ==============================================================================
    ALERTAS Y MENSAJES DE ESTADO
-   ========================================================================== */
+   ============================================================================== */
 .alert {
     padding: 0.85rem 1rem;
     border-radius: var(--radius-md);
@@ -215,9 +229,9 @@ body {
     margin-bottom: 0.2rem;
 }
 
-/* ==========================================================================
-   FORMULARIO E INPUTS
-   ========================================================================== */
+/* ==============================================================================
+   CAMPOS DE ENTRADA (INPUTS)
+   ============================================================================== */
 .auth-form {
     display: flex;
     flex-direction: column;
@@ -255,7 +269,7 @@ body {
     box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
-/* Wrapper para input con botón mostrar/ocultar */
+/* Contenedor relativo para permitir posicionar el botón de ojo a la derecha */
 .password-field-wrapper {
     position: relative;
     display: flex;
@@ -282,7 +296,7 @@ body {
     opacity: 1;
 }
 
-/* Indicadores visuales de requisitos de contraseña (UX en JS) */
+/* Indicadores de requisitos de contraseña asistidos por JS */
 .pwd-requirements {
     display: flex;
     flex-direction: column;
@@ -320,9 +334,9 @@ body {
     font-weight: 500;
 }
 
-/* ==========================================================================
+/* ==============================================================================
    BOTONES
-   ========================================================================== */
+   ============================================================================== */
 .btn-submit {
     background-color: var(--primary-color);
     color: white;
@@ -361,9 +375,9 @@ body {
     text-decoration: underline;
 }
 
-/* ==========================================================================
-   VISTA DE BIENVENIDA (POST-LOGIN)
-   ========================================================================== */
+/* ==============================================================================
+   PANTALLA DE BIENVENIDA (POST-LOGIN)
+   ============================================================================== */
 .welcome-card {
     text-align: center;
 }
@@ -440,9 +454,9 @@ body {
     background-color: #dc2626;
 }
 
-/* ==========================================================================
-   FOOTER
-   ========================================================================== */
+/* ==============================================================================
+   PIE DE PÁGINA (FOOTER)
+   ============================================================================== */
 .footer {
     text-align: center;
     padding: 1.2rem;

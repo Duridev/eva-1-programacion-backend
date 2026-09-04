@@ -1,3 +1,20 @@
+<!--
+==============================================================================
+PLANTILLA: templates/accounts/register.html
+------------------------------------------------------------------------------
+¿PARA QUÉ SIRVE ESTE ARCHIVO?
+Es la interfaz visual donde el usuario ingresa sus datos para crear una nueva cuenta.
+
+¿QUÉ FUNCIONES REALIZA DENTRO DEL PROGRAMA?
+1. Hereda de 'base.html' con {% extends "base.html" %}.
+2. Utiliza {% csrf_token %} para proteger el formulario contra ataques de falsificación
+   de petición en sitios cruzados (CSRF), requisito obligatorio de seguridad en Django.
+3. Renderiza la lista de errores que envía la vista de Django con {% for error in errors %}.
+4. Mantiene los valores previamente escritos (prev_username, prev_email) en caso de fallo.
+5. Proporciona elementos HTML con identificadores (id) para que 'validaciones.js' pueda
+   dar asistencia visual en vivo (mostrar/ocultar clave, checklist de requisitos).
+==============================================================================
+-->
 {% extends "base.html" %}
 
 {% block title %}Crear Cuenta — Registro{% endblock %}
@@ -9,7 +26,10 @@
         <p class="subtitle">Ingresa tus datos para registrarte en la plataforma</p>
     </div>
 
-    <!-- Lista de errores generados y validados por el servidor en Django -->
+    <!-- 
+      BLOQUE DE ERRORES DEL SERVIDOR (DJANGO)
+      Si la vista 'register_view' detectó inconsistencias, las devuelve en la lista 'errors'.
+    -->
     {% if errors %}
     <div class="alert alert-danger" id="django-errors-box">
         <strong>Corrige los siguientes errores:</strong>
@@ -21,12 +41,21 @@
     </div>
     {% endif %}
 
-    <!-- Alerta dinámica del lado del cliente (JS) para advertir antes de enviar -->
+    <!-- 
+      ALERTA DINÁMICA DEL CLIENTE (JAVASCRIPT)
+      Oculta por defecto. JS la hace visible si las contraseñas no coinciden antes de enviar.
+    -->
     <div class="alert alert-warning js-client-alert" id="js-register-alert" style="display: none;">
-        <!-- Mensaje insertado por JS -->
+        <!-- Mensaje insertado dinámicamente por JS -->
     </div>
 
+    <!-- 
+      FORMULARIO DE REGISTRO
+      method="POST": Envía los datos de forma segura en el cuerpo de la petición HTTP.
+      action="/registro/": Destino donde Django procesará el formulario.
+    -->
     <form method="POST" action="/registro/" class="auth-form" id="register-form" novalidate>
+        <!-- Token de seguridad CSRF generado por Django -->
         {% csrf_token %}
 
         <!-- Campo: Nombre de usuario -->
@@ -69,12 +98,13 @@
                     required 
                     autocomplete="new-password"
                 >
+                <!-- Botón interactivo para alternar visibilidad de contraseña (JS) -->
                 <button type="button" class="btn-toggle-pwd" data-target="id_password" title="Mostrar u ocultar contraseña">
                     👁️
                 </button>
             </div>
 
-            <!-- Indicadores en vivo de requisitos de contraseña (soporte UX con JS) -->
+            <!-- Indicadores en vivo de requisitos (se colorean en verde con JS mientras se escribe) -->
             <div class="pwd-requirements" id="pwd-requirements">
                 <span class="req-item" id="req-length">✖ Mínimo 8 caracteres</span>
                 <span class="req-item" id="req-upper">✖ Al menos 1 mayúscula</span>
@@ -94,14 +124,16 @@
                     required 
                     autocomplete="new-password"
                 >
+                <!-- Botón interactivo para alternar visibilidad de confirmación (JS) -->
                 <button type="button" class="btn-toggle-pwd" data-target="id_confirm_password" title="Mostrar u ocultar contraseña">
                     👁️
                 </button>
             </div>
+            <!-- Texto que avisa en vivo si coincide o no con la primera contraseña -->
             <small class="hint-text" id="pwd-match-hint"></small>
         </div>
 
-        <!-- Botón de envío -->
+        <!-- Botón para enviar los datos al servidor -->
         <button type="submit" class="btn-submit" id="btn-register-submit">
             Registrar Cuenta
         </button>

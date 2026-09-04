@@ -1,3 +1,19 @@
+<!--
+==============================================================================
+PLANTILLA: templates/accounts/login.html
+------------------------------------------------------------------------------
+¿PARA QUÉ SIRVE ESTE ARCHIVO?
+Es la interfaz de autenticación del sistema donde el usuario ingresa sus
+credenciales para acceder o recibe alertas si su cuenta fue bloqueada por intentos.
+
+¿QUÉ FUNCIONES REALIZA DENTRO DEL PROGRAMA?
+1. Hereda de 'base.html' con {% extends "base.html" %}.
+2. Muestra mensaje de éxito si el usuario viene redirigido desde el registro exitoso ({% if mensaje_exito %}).
+3. Muestra errores de autenticación o el banner de bloqueo al 3er intento ({% if error_login %}).
+4. Incluye {% csrf_token %} para garantizar la seguridad del envío POST.
+5. Integra el botón para mostrar/ocultar contraseña mediante JavaScript.
+==============================================================================
+-->
 {% extends "base.html" %}
 
 {% block title %}Iniciar Sesión — Autenticación{% endblock %}
@@ -9,14 +25,21 @@
         <p class="subtitle">Ingresa tus credenciales para acceder al sistema</p>
     </div>
 
-    <!-- Mensaje de éxito tras completar el registro de usuario -->
+    <!-- 
+      MENSAJE DE ÉXITO POST-REGISTRO
+      Se activa cuando la URL trae '?registrado=1' desde la vista de registro.
+    -->
     {% if mensaje_exito %}
     <div class="alert alert-success" id="login-success-box">
         {{ mensaje_exito }}
     </div>
     {% endif %}
 
-    <!-- Alerta de error o bloqueo emitida por Django -->
+    <!-- 
+      ALERTA DE ERROR O BLOQUEO DE CUENTA
+      Si la vista 'login_view' detectó credenciales erróneas o bloqueo, se muestra aquí.
+      Si 'bloqueado' es True, añade un badge rojo de 'ACCESO DENEGADO'.
+    -->
     {% if error_login %}
     <div class="alert {% if bloqueado %}alert-danger alert-locked{% else %}alert-danger{% endif %}" id="login-error-box">
         {% if bloqueado %}
@@ -26,12 +49,17 @@
     </div>
     {% endif %}
 
-    <!-- Alerta informativa con datos del usuario semilla para pruebas -->
+    <!-- Cuadro informativo con las credenciales del usuario semilla predefinido en store.py -->
     <div class="alert alert-info">
         <small>💡 <strong>Usuario de prueba precargado:</strong> <code>admin</code> / Clave: <code>Admin1234</code></small>
     </div>
 
+    <!-- 
+      FORMULARIO DE LOGIN
+      Envía usuario y contraseña vía POST hacia '/login/'.
+    -->
     <form method="POST" action="/login/" class="auth-form" id="login-form">
+        <!-- Token de seguridad CSRF de Django -->
         {% csrf_token %}
 
         <!-- Campo: Nombre de usuario -->
@@ -60,6 +88,7 @@
                     required 
                     autocomplete="current-password"
                 >
+                <!-- Botón para alternar visibilidad de contraseña (JS) -->
                 <button type="button" class="btn-toggle-pwd" data-target="id_login_password" title="Mostrar u ocultar contraseña">
                     👁️
                 </button>
