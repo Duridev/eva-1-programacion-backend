@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Cuenta — Registro{% endblock %}
+
+{% block content %}
 <!--
 ==============================================================================
 PLANTILLA: templates/accounts/register.html
@@ -6,20 +11,15 @@ PLANTILLA: templates/accounts/register.html
 Es la interfaz visual donde el usuario ingresa sus datos para crear una nueva cuenta.
 
 ¿QUÉ FUNCIONES REALIZA DENTRO DEL PROGRAMA?
-1. Hereda de 'base.html' con {% extends "base.html" %}.
-2. Utiliza {% csrf_token %} para proteger el formulario contra ataques de falsificación
+1. Hereda de 'base.html' con la etiqueta extends.
+2. Utiliza csrf_token para proteger el formulario contra ataques de falsificación
    de petición en sitios cruzados (CSRF), requisito obligatorio de seguridad en Django.
-3. Renderiza la lista de errores que envía la vista de Django con {% for error in errors %}.
+3. Renderiza la lista de errores que envía la vista de Django con un ciclo for.
 4. Mantiene los valores previamente escritos (prev_username, prev_email) en caso de fallo.
 5. Proporciona elementos HTML con identificadores (id) para que 'validaciones.js' pueda
    dar asistencia visual en vivo (mostrar/ocultar clave, checklist de requisitos).
 ==============================================================================
 -->
-{% extends "base.html" %}
-
-{% block title %}Crear Cuenta — Registro{% endblock %}
-
-{% block content %}
 <div class="auth-card">
     <div class="card-header">
         <h2>Crear Cuenta</h2>

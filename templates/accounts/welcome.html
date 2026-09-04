@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Bienvenida — Sesión Iniciada{% endblock %}
+
+{% block content %}
 <!--
 ==============================================================================
 PLANTILLA: templates/accounts/welcome.html
@@ -7,18 +12,13 @@ Es la pantalla de destino exitoso tras un login correcto. Representa la zona
 privada o "panel principal" al que solo tienen acceso los usuarios autenticados.
 
 ¿QUÉ FUNCIONES REALIZA DENTRO DEL PROGRAMA?
-1. Hereda de 'base.html' con {% extends "base.html" %}.
+1. Hereda de 'base.html' con la etiqueta extends.
 2. Muestra un saludo personalizado utilizando la variable inyectada desde la
    vista: {{ username }}.
 3. Comunica visualmente que la sesión está activa y protegida por cookies firmadas.
 4. Provee el botón para cerrar sesión redirigiendo a la ruta '/logout/'.
 ==============================================================================
 -->
-{% extends "base.html" %}
-
-{% block title %}Bienvenida — Sesión Iniciada{% endblock %}
-
-{% block content %}
 <div class="auth-card welcome-card">
     <div class="card-header">
         <div class="welcome-avatar">👋</div>

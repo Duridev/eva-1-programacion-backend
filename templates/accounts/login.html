@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Sesión — Autenticación{% endblock %}
+
+{% block content %}
 <!--
 ==============================================================================
 PLANTILLA: templates/accounts/login.html
@@ -7,18 +12,13 @@ Es la interfaz de autenticación del sistema donde el usuario ingresa sus
 credenciales para acceder o recibe alertas si su cuenta fue bloqueada por intentos.
 
 ¿QUÉ FUNCIONES REALIZA DENTRO DEL PROGRAMA?
-1. Hereda de 'base.html' con {% extends "base.html" %}.
-2. Muestra mensaje de éxito si el usuario viene redirigido desde el registro exitoso ({% if mensaje_exito %}).
-3. Muestra errores de autenticación o el banner de bloqueo al 3er intento ({% if error_login %}).
-4. Incluye {% csrf_token %} para garantizar la seguridad del envío POST.
+1. Hereda de 'base.html' con la etiqueta extends.
+2. Muestra mensaje de éxito si el usuario viene redirigido desde el registro exitoso.
+3. Muestra errores de autenticación o el banner de bloqueo al 3er intento.
+4. Incluye csrf_token para garantizar la seguridad del envío POST.
 5. Integra el botón para mostrar/ocultar contraseña mediante JavaScript.
 ==============================================================================
 -->
-{% extends "base.html" %}
-
-{% block title %}Iniciar Sesión — Autenticación{% endblock %}
-
-{% block content %}
 <div class="auth-card">
     <div class="card-header">
         <h2>Iniciar Sesión</h2>
