@@ -42,8 +42,7 @@ eva-1/
 ├── accounts/
 │   ├── store.py          # USERS y LOGIN_ATTEMPTS en memoria
 │   ├── views.py          # register_view, login_view, welcome_view, logout_view
-│   ├── urls.py           # Rutas /registro/, /login/, /bienvenida/, /logout/
-│   └── tests.py          # Pruebas automatizadas (SimpleTestCase)
+│   └── urls.py           # Rutas /registro/, /login/, /bienvenida/, /logout/
 ├── templates/
 │   ├── base.html         # Plantilla base con navbar y footer
 │   └── accounts/
@@ -83,28 +82,6 @@ El proyecto estará disponible inmediatamente en:
 
 > [!NOTE]
 > No es necesario ejecutar `python manage.py migrate` debido a que el proyecto utiliza el motor de sesiones en cookies criptográficamente firmadas.
-
----
-
-## 🧪 Pruebas Automatizadas
-
-Se incluye una suite de pruebas unitarias que valida cada escenario de la **Sección 13** de la especificación:
-
-```powershell
-python manage.py test accounts
-```
-
-### Casos verificados en las pruebas:
-1. Redirección de la raíz `/` hacia `/login/`.
-2. Error al intentar registrar un nombre de usuario ya existente.
-3. Error al intentar registrar un correo ya existente.
-4. Error con contraseñas que no cumplen complejidad (longitud, mayúscula, número).
-5. Error si las contraseñas no coinciden.
-6. Registro exitoso y redirección a login.
-7. Login exitoso con credenciales correctas y acceso a `/bienvenida/`.
-8. Conteo incremental de intentos fallidos (1 y 2).
-9. Bloqueo definitivo de cuenta al 3er intento fallido.
-10. Protección de la ruta `/bienvenida/` cuando no hay sesión activa.
 
 ---
 

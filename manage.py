@@ -1,19 +1,5 @@
 #!/usr/bin/env python
-"""
-==============================================================================
-ARCHIVO: manage.py
-------------------------------------------------------------------------------
-¿PARA QUÉ SIRVE ESTE ARCHIVO?
-Es el punto de entrada de comandos de Django para el desarrollador.
-Sirve para interactuar con el proyecto desde la terminal (consola).
 
-¿QUÉ FUNCIONES REALIZA DENTRO DEL PROGRAMA?
-1. Apunta a la configuración principal del proyecto ('config.settings').
-2. Recibe los comandos que escribimos en la terminal (ej: 'runserver', 'test',
-   'check') y se los pasa al núcleo de Django para que los ejecute.
-3. Verifica que Django esté instalado en el entorno virtual antes de correr.
-==============================================================================
-"""
 import os
 import sys
 
