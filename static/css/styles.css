@@ -67,61 +67,10 @@ body {
 }
 
 /* ==============================================================================
-   BARRA SUPERIOR DE NAVEGACIÓN
+/* ==============================================================================
+   BARRA SUPERIOR DE NAVEGACIÓN (En EVA 2 se utiliza Bootstrap 5.3 CDN)
    ============================================================================== */
-.navbar {
-    background-color: var(--card-bg);
-    border-bottom: 1px solid var(--border-color);
-    padding: 1rem 1.5rem;
-}
-
-.nav-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.brand-logo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    color: var(--text-main);
-    font-weight: 700;
-    font-size: 1.1rem;
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.nav-item {
-    text-decoration: none;
-    color: var(--text-muted);
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: color 0.2s ease;
-}
-
-.nav-item:hover {
-    color: var(--primary-color);
-}
-
-.nav-btn {
-    background-color: var(--primary-light);
-    color: var(--primary-color);
-    padding: 0.4rem 0.9rem;
-    border-radius: 6px;
-}
-
-.nav-btn:hover {
-    background-color: #e0e7ff;
-    color: var(--primary-hover);
-}
+/* Los estilos del navbar ahora son gestionados nativamente por Bootstrap 5 */
 
 /* ==============================================================================
    CONTENEDOR CENTRAL (CARD DE AUTENTICACIÓN)
@@ -143,6 +92,7 @@ body {
     border: 1px solid var(--border-color);
     padding: 2.2rem;
     animation: fadeIn 0.3s ease-in-out;
+    margin: 1.5rem auto;
 }
 
 @keyframes fadeIn {
