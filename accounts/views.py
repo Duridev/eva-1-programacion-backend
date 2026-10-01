@@ -1,7 +1,15 @@
 from django.shortcuts import render, redirect
-from .store import USERS, LOGIN_ATTEMPTS
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from .store import LOGIN_ATTEMPTS
+
 
 def register_view(request):
+    """
+    Vista de registro de usuario.
+    Recibe por GET el formulario y por POST valida datos y crea un nuevo usuario
+    con contraseña encriptada en la tabla auth_user mediante create_user.
+    """
     if request.method == 'GET':
         return render(request, 'accounts/register.html')
 
@@ -11,7 +19,8 @@ def register_view(request):
     confirm_password = request.POST.get('confirm_password', '')
 
     errors = []
-    
+
+    # Validaciones de campos obligatorios
     if not username:
         errors.append("El nombre de usuario es obligatorio.")
     if not email:
@@ -19,12 +28,14 @@ def register_view(request):
     if not password:
         errors.append("La contraseña es obligatoria.")
 
-    if username and any(u['username'].lower() == username.lower() for u in USERS):
+    # Validación de usuario y correo únicos consultando el ORM de Django en SQLite
+    if username and User.objects.filter(username=username).exists():
         errors.append("El nombre de usuario ya está en uso.")
 
-    if email and any(u['email'].lower() == email for u in USERS):
+    if email and User.objects.filter(email=email).exists():
         errors.append("El correo ya está registrado.")
 
+    # Validaciones de seguridad de contraseña
     if password:
         if len(password) < 8:
             errors.append("La contraseña debe tener al menos 8 caracteres.")
@@ -33,6 +44,7 @@ def register_view(request):
         if not any(c.isdigit() for c in password):
             errors.append("La contraseña debe contener al menos un número.")
 
+    # Validación de coincidencia de contraseñas
     if password and confirm_password and password != confirm_password:
         errors.append("Las contraseñas no coinciden.")
 
@@ -43,16 +55,22 @@ def register_view(request):
             'prev_email': email
         })
 
-    USERS.append({
-        'username': username,
-        'email': email,
-        'password': password
-    })
+    # create_user hashea automáticamente la contraseña antes de guardarla en auth_user
+    User.objects.create_user(username=username, email=email, password=password)
 
     return redirect('/login/?registrado=1')
 
 
 def login_view(request):
+    """
+    Vista de inicio de sesión.
+    Recibe credenciales por POST, consulta intentos en LOGIN_ATTEMPTS, valida con authenticate()
+    y crea la sesión en base de datos con login() redirigiendo a la raíz '/'.
+    """
+    # Si el usuario ya está autenticado, se redirige directamente al menú principal
+    if request.user.is_authenticated:
+        return redirect('/')
+
     mensaje_exito = None
     if request.GET.get('registrado') == '1':
         mensaje_exito = "¡Usuario registrado con éxito! Ya puedes iniciar sesión."
@@ -73,6 +91,7 @@ def login_view(request):
 
     estado_usuario = LOGIN_ATTEMPTS.get(username, {'intentos': 0, 'bloqueado': False})
 
+    # Verificar si el usuario ya se encuentra bloqueado
     if estado_usuario.get('bloqueado'):
         return render(request, 'accounts/login.html', {
             'error_login': "Clave bloqueada. Ha superado el máximo de intentos permitidos.",
@@ -80,17 +99,16 @@ def login_view(request):
             'prev_username': username
         })
 
-    usuario_encontrado = None
-    for u in USERS:
-        if u['username'] == username and u['password'] == password:
-            usuario_encontrado = u
-            break
+    # authenticate() verifica usuario y contraseña hasheada contra auth_user
+    user = authenticate(request, username=username, password=password)
 
-    if usuario_encontrado:
+    if user is not None:
+        # Credenciales correctas: se resetea el contador de intentos y se inicia sesión
         LOGIN_ATTEMPTS[username] = {'intentos': 0, 'bloqueado': False}
-        request.session['username'] = usuario_encontrado['username']
-        return redirect('/bienvenida/')
+        login(request, user)
+        return redirect('/')
     else:
+        # Credenciales incorrectas: registrar intento fallido
         if username not in LOGIN_ATTEMPTS:
             LOGIN_ATTEMPTS[username] = {'intentos': 0, 'bloqueado': False}
 
@@ -112,17 +130,10 @@ def login_view(request):
         })
 
 
-def welcome_view(request):
-    username = request.session.get('username')
-
-    if not username:
-        return redirect('/login/')
-
-    return render(request, 'accounts/welcome.html', {
-        'username': username
-    })
-
-
 def logout_view(request):
-    request.session.flush()
+    """
+    Vista de cierre de sesión.
+    Cierra la sesión del usuario mediante logout() de Django y redirige a /login/.
+    """
+    logout(request)
     return redirect('/login/')
