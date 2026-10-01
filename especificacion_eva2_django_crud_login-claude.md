@@ -140,7 +140,7 @@ Se usa `CharField` (no `TextField`) porque `max_length` es propio de `CharField`
 | Campo | `name` | Tipo HTML | Notas |
 |---|---|---|---|
 | Nombre | `txtnom` | `text` | `required`, `maxlength="100"` |
-| Marca | `cbomar` | `select` | opciones: `A cuenta`, `Jumbo`, `Lider`, `Unimarc`, `Santa Isabel` |
+| Marca | `cbomar` | `select` | opciones: `Acuenta`, `Jumbo`, `Lider`, `Unimarc`, `Santa Isabel` |
 | Precio | `txtpre` | `number` | `required`, `min="1"`, `max="9999999"` |
 
 ### 5.3 Vistas (`productos/views.py`)

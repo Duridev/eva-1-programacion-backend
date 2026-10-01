@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Producto
 
 # Lista de marcas disponibles según la pauta (Guías 2 y 3)
-MARCAS_DISPONIBLES = ['A cuenta', 'Jumbo', 'Lider', 'Unimarc', 'Santa Isabel']
+MARCAS_DISPONIBLES = ['Acuenta', 'Jumbo', 'Lider', 'Unimarc', 'Santa Isabel']
 
 
 @login_required(login_url='/login/')
