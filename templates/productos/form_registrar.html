@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Producto — Gestión de Productos{% endblock %}
+
+{% block content %}
+<!--
+==============================================================================
+PLANTILLA: templates/productos/form_registrar.html
+------------------------------------------------------------------------------
+¿PARA QUÉ SIRVE ESTE ARCHIVO?
+Permite el ingreso de un nuevo producto mediante un formulario HTML.
+
+¿QUÉ FUNCIONES REALIZA DENTRO DEL PROGRAMA?
+1. Envía los datos vía POST a la URL '/insertar/'.
+2. Incluye token csrf para protección contra vulnerabilidades CSRF.
+3. Utiliza los nombres de campos requeridos por la pauta (txtnom, cbomar, txtpre).
+4. Muestra mensajes de retroalimentación usando alertas de Bootstrap 5:
+   - {{ msjOk }} en 'alert-success' si la inserción fue correcta.
+   - {{ msjErr }} en 'alert-danger' si hubo campos vacíos o valores no numéricos.
+5. Ofrece botones de retorno hacia el menú principal ('/') y hacia el listado ('/listado/').
+==============================================================================
+-->
+<div class="row justify-content-center py-3">
+    <div class="col-lg-7 col-md-9">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-primary text-white text-center py-3 rounded-top-4">
+                <h2 class="h4 mb-0 fw-bold"><i class="bi bi-plus-circle me-2"></i>Registrar Nuevo Producto</h2>
+            </div>
+            <div class="card-body p-4">
+
+                <!-- Mensaje de éxito tras guardar -->
+                {% if msjOk %}
+                <div class="alert alert-success alert-dismissible fade show d-flex align-items-center mb-4" role="alert">
+                    <i class="bi bi-check-circle-fill fs-5 me-2"></i>
+                    <div>{{ msjOk }}</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+                {% endif %}
+
+                <!-- Mensaje de error si falla la validación -->
+                {% if msjErr %}
+                <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center mb-4" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill fs-5 me-2"></i>
+                    <div>{{ msjErr }}</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+                {% endif %}
+
+                <!-- Formulario de alta de producto -->
+                <form action="/insertar/" method="post">
+                    <!-- Token de seguridad CSRF obligatorio en Django -->
+                    {% csrf_token %}
+
+                    <!-- Campo: Nombre del producto (txtnom) -->
+                    <div class="mb-3">
+                        <label for="txtnom" class="form-label fw-semibold">Nombre del Producto</label>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            id="txtnom" 
+                            name="txtnom" 
+                            maxlength="100" 
+                            placeholder="Ej: Leche Entera 1L" 
+                            value="{{ prev_nom|default:'' }}"
+                            required
+                        >
+                        <div class="form-text">Máximo 100 caracteres.</div>
+                    </div>
+
+                    <!-- Campo: Marca del producto (cbomar) -->
+                    <div class="mb-3">
+                        <label for="cbomar" class="form-label fw-semibold">Marca</label>
+                        <select class="form-select" id="cbomar" name="cbomar" required>
+                            <option value="" disabled {% if not prev_mar %}selected{% endif %}>-- Selecciona una marca --</option>
+                            {% for m in marcas %}
+                                <option value="{{ m }}" {% if prev_mar == m %}selected{% endif %}>{{ m }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Campo: Precio del producto (txtpre) -->
+                    <div class="mb-4">
+                        <label for="txtpre" class="form-label fw-semibold">Precio (CLP)</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input 
+                                type="number" 
+                                class="form-control" 
+                                id="txtpre" 
+                                name="txtpre" 
+                                min="1" 
+                                max="9999999" 
+                                placeholder="Ej: 1290" 
+                                value="{{ prev_pre|default:'' }}"
+                                required
+                            >
+                        </div>
+                        <div class="form-text">Debe ser un valor positivo entre 1 y 9.999.999.</div>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-between pt-2">
+                        <a href="/" class="btn btn-outline-secondary px-4">
+                            <i class="bi bi-arrow-left me-1"></i> Volver al Menú
+                        </a>
+                        <div class="d-flex gap-2">
+                            <a href="/listado/" class="btn btn-outline-primary px-3">
+                                <i class="bi bi-table me-1"></i> Ver Listado
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4 fw-semibold">
+                                <i class="bi bi-check-lg me-1"></i> Guardar Producto
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

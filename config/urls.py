@@ -1,9 +1,9 @@
 from django.urls import path, include
-from django.views.generic import RedirectView
 
+# Mapeo general de rutas del proyecto
 urlpatterns = [
-
-    path('', RedirectView.as_view(url='/login/', permanent=False), name='home_redirect'),
-
+    # Rutas de la app accounts (/registro/, /login/, /logout/)
     path('', include('accounts.urls')),
+    # Rutas de la app productos (menú principal '/', /listado/, /form_registrar/, etc.)
+    path('', include('productos.urls')),
 ]

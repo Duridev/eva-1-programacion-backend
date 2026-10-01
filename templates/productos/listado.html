@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Listado de Productos — Catálogo{% endblock %}
+
+{% block content %}
+<!--
+==============================================================================
+PLANTILLA: templates/productos/listado.html
+------------------------------------------------------------------------------
+¿PARA QUÉ SIRVE ESTE ARCHIVO?
+Muestra todos los registros de la tabla 'productos_producto' de SQLite en una
+tabla estructurada con Bootstrap 5.
+
+¿QUÉ FUNCIONES REALIZA DENTRO DEL PROGRAMA?
+1. Recorre la colección 'productos' con la etiqueta for de Django.
+2. Presenta columnas requeridas: ID, NOMBRE, MARCA, PRECIO, EDITAR, ELIMINAR.
+3. Botón EDITAR: Enlaza a '/form_actualizar/{{ p.id }}/' con ícono de lápiz (bi-pencil).
+4. Botón ELIMINAR: Llama a la función JavaScript 'botonEliminar(id)' con ícono bi-trash.
+5. Función JS 'botonEliminar': Muestra un diálogo confirm() para evitar borrados accidentales
+   y redirige a '/eliminar/<id>/' si el usuario confirma.
+==============================================================================
+-->
+<div class="py-3">
+    <!-- Encabezado con título y botones de acción -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h1 class="h3 fw-bold mb-1"><i class="bi bi-table text-primary me-2"></i>Catálogo de Productos</h1>
+            <p class="text-muted mb-0">Listado general de productos almacenados en la base de datos SQLite</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="/" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Volver al Menú
+            </a>
+            <a href="/form_registrar/" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i> Registrar Producto
+            </a>
+        </div>
+    </div>
+
+    <!-- Tabla responsiva de productos -->
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle mb-0 text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col" style="width: 10%;">ID</th>
+                        <th scope="col" style="width: 30%;" class="text-start ps-4">NOMBRE</th>
+                        <th scope="col" style="width: 25%;">MARCA</th>
+                        <th scope="col" style="width: 15%;">PRECIO</th>
+                        <th scope="col" style="width: 10%;">EDITAR</th>
+                        <th scope="col" style="width: 10%;">ELIMINAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in productos %}
+                    <tr>
+                        <td class="fw-bold text-muted">{{ p.id }}</td>
+                        <td class="text-start ps-4 fw-semibold text-dark">{{ p.nombre }}</td>
+                        <td>
+                            <span class="badge bg-secondary-subtle text-secondary-emphasis border px-3 py-2 rounded-pill">
+                                {{ p.marca }}
+                            </span>
+                        </td>
+                        <td class="fw-bold text-success">${{ p.precio }}</td>
+                        <td>
+                            <!-- Enlace a la vista de edición -->
+                            <a href="/form_actualizar/{{ p.id }}/" class="btn btn-outline-primary btn-sm rounded-circle p-2" title="Editar producto">
+                                <i class="bi bi-pencil fs-6"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <!-- Botón con confirmación JavaScript -->
+                            <button type="button" class="btn btn-outline-danger btn-sm rounded-circle p-2" onclick="botonEliminar({{ p.id }})" title="Eliminar producto">
+                                <i class="bi bi-trash fs-6"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="py-5 text-center text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-3 text-secondary"></i>
+                            <p class="fs-5 mb-2">No hay productos registrados en el sistema.</p>
+                            <a href="/form_registrar/" class="btn btn-sm btn-outline-primary mt-2">
+                                <i class="bi bi-plus-circle me-1"></i> Agregar el primer producto
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Script de confirmación para eliminar según la especificación -->
+<script>
+    function botonEliminar(id) {
+        if (confirm("¿Eliminar este producto?")) {
+            window.location.href = "/eliminar/" + id + "/";
+        }
+    }
+</script>
+{% endblock %}

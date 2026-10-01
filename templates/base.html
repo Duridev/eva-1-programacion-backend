@@ -8,7 +8,7 @@ los enlaces CDN a Bootstrap 5.3 y Bootstrap Icons, los estilos personalizados
 y la barra de navegación dinámica.
 
 ¿QUÉ FUNCIONES REALIZA DENTRO DEL PROGRAMA?
-1. Herencia de plantillas: Proporciona los bloques {% block title %} y {% block content %}
+1. Herencia de plantillas: Proporciona los bloques de título y de contenido
    para que las vistas hijas (login, register, index, listado, etc.) inserten su contenido.
 2. Carga de librerías: Bootstrap 5.3 (CSS y JS) y Bootstrap Icons por CDN.
 3. Barra de navegación dinámica:
@@ -100,7 +100,7 @@ y la barra de navegación dinámica.
         </div>
     </nav>
 
-    <!-- Contenedor principal donde cada vista inyecta su contenido con {% block content %} -->
+    <!-- Contenedor principal donde cada vista inyecta su contenido con el bloque content -->
     <main class="flex-grow-1 py-4">
         <div class="container">
             {% block content %}

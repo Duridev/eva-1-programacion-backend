@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Menú Principal — Gestión de Productos{% endblock %}
+
+{% block content %}
+<!--
+==============================================================================
+PLANTILLA: templates/productos/index.html
+------------------------------------------------------------------------------
+¿PARA QUÉ SIRVE ESTE ARCHIVO?
+Es la pantalla de inicio del sistema posterior al login exitoso (ruta '/').
+Ofrece el menú central para navegar hacia las funciones del CRUD de productos.
+
+¿QUÉ FUNCIONES REALIZA DENTRO DEL PROGRAMA?
+1. Extiende de 'base.html' para mantener la barra de navegación y estilos.
+2. Presenta accesos directos principales:
+   - "Registrar producto" -> Enlaza a '/form_registrar/'
+   - "Listado de productos" -> Enlaza a '/listado/'
+3. Utiliza componentes Card y Grid de Bootstrap 5 para un diseño limpio y responsivo.
+==============================================================================
+-->
+<div class="py-4">
+    <!-- Encabezado de bienvenida -->
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-dark mb-2">Panel de Gestión de Productos</h1>
+        <p class="text-muted fs-5">Selecciona una de las opciones disponibles para administrar el catálogo</p>
+    </div>
+
+    <!-- Opciones del menú principal en tarjetas Bootstrap -->
+    <div class="row g-4 justify-content-center max-w-800 mx-auto" style="max-width: 800px;">
+        <!-- Opción 1: Registrar Producto -->
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0 rounded-4 text-center p-4 hover-shadow transition">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3 bg-primary-subtle text-primary rounded-circle mb-3">
+                        <i class="bi bi-plus-circle fs-1"></i>
+                    </div>
+                    <h3 class="card-title h4 fw-bold mb-2">Registrar Producto</h3>
+                    <p class="card-text text-muted mb-4">
+                        Añade nuevos productos al inventario especificando nombre, marca y precio.
+                    </p>
+                    <a href="/form_registrar/" class="btn btn-primary px-4 py-2 rounded-pill fw-semibold w-100">
+                        <i class="bi bi-pencil-square me-1"></i> Ir al Formulario
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opción 2: Listado de Productos -->
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm border-0 rounded-4 text-center p-4 hover-shadow transition">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                    <div class="p-3 bg-success-subtle text-success rounded-circle mb-3">
+                        <i class="bi bi-card-checklist fs-1"></i>
+                    </div>
+                    <h3 class="card-title h4 fw-bold mb-2">Listado de Productos</h3>
+                    <p class="card-text text-muted mb-4">
+                        Visualiza todos los productos almacenados en SQLite, edítalos o elimínalos.
+                    </p>
+                    <a href="/listado/" class="btn btn-success px-4 py-2 rounded-pill fw-semibold w-100">
+                        <i class="bi bi-table me-1"></i> Ver Catálogo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
